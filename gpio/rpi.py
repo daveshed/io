@@ -1,3 +1,7 @@
+"""
+io interface concretions of the stage iointerface that apply to the RPi.GPIO
+library.
+"""
 from stage import iointerface
 from gpio import error
 
@@ -14,31 +18,9 @@ class OutputChannel(iointerface.OutputInterface):
             pin (int): the physical pin to initialise
             gpio (RPi.GPIO): the raspberry pi gpio driver instance
         """
-        self._gpio = gpio
-        self._pin = pin
-        self._state = None
-        self._gpio.setup(pin, gpio.OUT)
+        super().__init__(pin, gpio)
+        gpio.setup(pin, gpio.OUT)
         self.set_low()
-
-    @property
-    def pin(self):
-        """
-        The physical pin that this output refers to
-
-        Returns:
-            int: the index of the pin this output applies to
-        """
-        return self._pin
-
-    @property
-    def state(self):
-        """
-        The signal at the output
-
-        Retruns:
-            bool: True if the output is high
-        """
-        return self._state
 
     def set_high(self):
         """
@@ -62,7 +44,10 @@ class InputChannel(iointerface.InputInterface):
     _DEBOUNCE_MS = 200
 
     class CallbackManager:
-
+        #pylint:disable=too-few-public-methods
+        """
+        Manages callbacks registered with the gpio instance
+        """
         def __init__(self):
             self.callbacks = []
 
@@ -80,13 +65,11 @@ class InputChannel(iointerface.InputInterface):
                 is interpreted as logical True value
             gpio (obj): the gpio driver instance
         """
+        super().__init__(pin, active_low, gpio)
         self._callback_manager = InputChannel.CallbackManager()
-        self._pin = pin
-        self._active_low = active_low
-        self._gpio = gpio
-        self._gpio.setup(
+        gpio.setup(
             pin, gpio.IN, gpio.PUD_UP if active_low else gpio.PUD_DOWN)
-        self._gpio.add_event_detect(
+        gpio.add_event_detect(
             pin,
             gpio.FALLING if active_low else gpio.RISING,
             callback=self._callback_manager,
@@ -104,6 +87,16 @@ class InputChannel(iointerface.InputInterface):
         signal = bool(self._gpio.input(self._pin))
         logic_level = not signal if self._active_low else signal
         return logic_level
+
+    @property
+    def pin(self):
+        """
+        The physical pin that this input refers to
+
+        Returns:
+            int: the index of the pin this input applies to
+        """
+        return self._pin
 
     def register_callback(self, callback):
         """

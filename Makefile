@@ -1,5 +1,5 @@
 PROJECT_TEST_DIR:=tests
-PROJECT_NAME:=stage
+PROJECT_NAME:=gpio
 
 .PHONY: install-requirements
 install-requirements:

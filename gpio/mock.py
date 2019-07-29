@@ -1,40 +1,15 @@
+"""
+Mock concrete implementations of iointerface defined by the stage package
+"""
 from stage import iointerface
 
 from gpio import error
 
 
 class OutputChannel(iointerface.OutputInterface):
-
-    def __init__(self, pin: int, gpio):
-        """
-        Initialise the given pin as an output on the gpio instance supplied
-
-        Args:
-            pin (int): the physical pin to initialise
-            gpio (obj): the gpio driver instance
-        """
-        self._pin = pin
-        self._state = False
-
-    @property
-    def pin(self):
-        """
-        The physical pin that this output refers to
-
-        Returns:
-            int: the index of the pin this output applies to
-        """
-        return self._pin
-
-    @property
-    def state(self):
-        """
-        The signal at the output
-
-        Retruns:
-            bool: True if the output is high
-        """
-        return self._state
+    """
+    Mock concrete implementation of iointerface defined by the stage package
+    """
 
     def set_high(self):
         """
@@ -52,7 +27,10 @@ class OutputChannel(iointerface.OutputInterface):
 
 
 class InputChannel(iointerface.InputInterface):
-
+    #pylint:disable=too-few-public-methods
+    """
+    Mock concrete implementation of iointerface defined by the stage package
+    """
     def __init__(self, pin: int, active_low: bool, gpio):
         """
         Initialise the given pin as an input on the gpio instance supplied
@@ -63,6 +41,7 @@ class InputChannel(iointerface.InputInterface):
                 is interpreted as logical True value
             gpio (obj): the gpio driver instance
         """
+        super().__init__(pin, active_low, gpio)
         self._state = False
         self._pin = pin
         self._callbacks = []
