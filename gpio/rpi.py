@@ -20,16 +20,16 @@ class OutputChannel(iointerface.OutputInterface):
         """
         super().__init__(pin, gpio)
         gpio.setup(pin, gpio.OUT)
-        self.set_low()
+        self.deactivate()
 
-    def set_high(self):
+    def activate(self):
         """
         Set the output high
         """
         self._gpio.output(self._pin, 1)
         self._state = True
 
-    def set_low(self):
+    def deactivate(self):
         """
         Set the output low
         """

@@ -14,9 +14,9 @@ class MockGpioOutputTestGroup(unittest.TestCase):
 
     def test_set_high_low_changes_state(self):
         self.output = mockgpio.OutputChannel(1, mock.Mock())
-        self.output.set_high()
+        self.output.activate()
         self.assertTrue(self.output.state)
-        self.output.set_low()
+        self.output.deactivate()
         self.assertFalse(self.output.state)
 
 

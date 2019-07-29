@@ -11,14 +11,14 @@ class OutputChannel(iointerface.OutputInterface):
     Mock concrete implementation of iointerface defined by the stage package
     """
 
-    def set_high(self):
+    def activate(self):
         """
         Set the output high
         """
         self._state = True
         return self.state
 
-    def set_low(self):
+    def deactivate(self):
         """
         Set the output low
         """

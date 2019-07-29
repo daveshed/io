@@ -20,12 +20,12 @@ class GpioOutputTestGroup(unittest.TestCase):
         self.assertFalse(self.output.state)
 
     def test_set_high_calls_ouput(self):
-        self.output.set_high()
+        self.output.activate()
         self.mock_gpio.output.assert_called_with(self.pin_idx, 1)
         self.assertTrue(self.output.state)
 
     def test_set_low_calls_output(self):
-        self.output.set_low()
+        self.output.deactivate()
         self.mock_gpio.output.assert_called_with(self.pin_idx, 0)
         self.assertFalse(self.output.state)
 
