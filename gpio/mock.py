@@ -47,16 +47,6 @@ class InputChannel(iointerface.InputInterface):
         self._callbacks = []
 
     @property
-    def pin(self):
-        """
-        The physical pin that this input refers to
-
-        Returns:
-            int: the index of the pin this input applies to
-        """
-        return self._pin
-
-    @property
     def state(self):
         """
         The current logical state of the input
