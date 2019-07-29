@@ -1,8 +1,8 @@
-from stage import gpio
+from stage import iointerface
 from gpio import error
 
 
-class OutputChannel(gpio.OutputInterface):
+class OutputChannel(iointerface.OutputInterface):
     """
     Concrete implementation of the OutputInterface abstraction
     """
@@ -55,7 +55,7 @@ class OutputChannel(gpio.OutputInterface):
         self._state = False
 
 
-class InputChannel(gpio.InputInterface):
+class InputChannel(iointerface.InputInterface):
     """
     Concrete implementation of the InputInterface abstraction
     """
